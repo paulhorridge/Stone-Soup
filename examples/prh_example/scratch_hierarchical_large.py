@@ -216,11 +216,10 @@ def create_fuse_tracker(fusion_time_interval, transition_model, prior_state, use
         tracklet_extractor = TrackletExtractor(transition_model=transition_model,
                                                fuse_interval=fusion_time_interval)
 
-    pseudomeas_extractor = PseudoMeasExtractor(use_prior=True)
+    pseudomeas_extractor = PseudoMeasExtractor(tracklet_extractor=tracklet_extractor, use_prior=True)
     return FuseTracker2(initiator=fuse_initiator, predictor=two_state_predictor,
                         updater=two_state_updater, associator=fuse_associator,
-                        tracklet_extractor=tracklet_extractor,
-                        pseudomeas_extractor=pseudomeas_extractor, death_rate=1e-4,
+                        detector=pseudomeas_extractor, death_rate=1e-4,
                         prob_detect=Probability(prob_detect),
                         delete_thresh=Probability(0.5)) # delete_thresh=Probability(0.0))
 

@@ -259,10 +259,9 @@ class FuseTracker(Tracker, _BaseFuseTracker):
         return timestamp, self.tracks
 
 
-class FuseTracker2(_BaseFuseTracker):
+class FuseTracker2(Tracker, _BaseFuseTracker):
 
-    tracklet_extractor: TrackletExtractor = Property(doc='The tracklet extractor')
-    pseudomeas_extractor: PseudoMeasExtractor = Property(doc='The pseudo-measurement extractor')
+    detector: PseudoMeasExtractor = Property(doc='The pseudo-measurement extractor')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -276,10 +275,10 @@ class FuseTracker2(_BaseFuseTracker):
 
     def process_tracks(self, alltracks, timestamp):
         # Extract tracklets
-        tracklets = self.tracklet_extractor.extract(alltracks, timestamp)
+        tracklets = self.detector.tracklet_extractor.extract(alltracks, timestamp)
         # Extract pseudo-measurements
-        scans = self.pseudomeas_extractor.extract(tracklets, timestamp)
-        if not len(scans) and self._current_end_time and timestamp - self._current_end_time >= self.tracklet_extractor.fuse_interval:
+        scans = self.detector.extract(tracklets, timestamp)
+        if not len(scans) and self._current_end_time and timestamp - self._current_end_time >= self.detector.tracklet_extractor.fuse_interval:
             scans = [Scan(self._current_end_time, timestamp, [])]
 
         for scan in scans:
@@ -295,5 +294,18 @@ class FuseTracker2(_BaseFuseTracker):
             self._tracks, self._current_end_time = self.process_scan(scan, self.tracks,
                                                                      self._current_end_time)
         return self.tracks
+
+    def __iter__(self):
+        self.detector_iter = iter(self.detector)
+        return super().__iter__()
+
+    def __next__(self):
+        time, scans = next(self.detector_iter)
+
+        for scan in scans:
+            self._tracks, self._current_end_time = self.process_scan(scan, self.tracks,
+                                                                     self._current_end_time)
+        return self._tracks
+
 
 

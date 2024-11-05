@@ -69,3 +69,10 @@ class FusionNode:
             child_
         two_state_tracks
     """
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        for leaf_time_and_tracks in zip(self.tracker):
+
