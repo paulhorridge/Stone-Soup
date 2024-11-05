@@ -300,12 +300,13 @@ class FuseTracker2(Tracker, _BaseFuseTracker):
         return super().__iter__()
 
     def __next__(self):
-        time, scans = next(self.detector_iter)
+        timestamp, scans = next(self.detector_iter)
 
-        for scan in scans:
-            self._tracks, self._current_end_time = self.process_scan(scan, self.tracks,
-                                                                     self._current_end_time)
-        return self._tracks
+        if (not len(scans) and self._current_end_time
+                and timestamp - self._current_end_time >= self.detector.tracklet_extractor.fuse_interval):
+            scans = [Scan(self._current_end_time, timestamp, [])]
+
+        return self.process_scans(scans)
 
 
 

@@ -36,13 +36,7 @@ class FusionNode:
     def process_tracks(self, timestamp):
         child_tracks = [child.tracker.tracks for child in self.children]
         input_tracks = [SensorTracks(tracks, i) for i, tracks in enumerate(child_tracks)]
-        if not self.use_two_state_tracks:
-            input_tracks = [SensorTracks(to_single_state(track, self.statedim), i) for i, track in enumerate(input_tracks)]
-        two_state_tracks = self.tracker.process_tracks(input_tracks, timestamp)
-        if not self.use_two_state_tracks:
-            return to_single_state(two_state_tracks, self.statedim)
-        else:
-            return two_state_tracks
+        return self.tracker.process_tracks(input_tracks, timestamp)
 
     def is_leaf(self):
         return len(self.children) == 0
@@ -71,8 +65,19 @@ class FusionNode:
     """
 
     def __iter__(self):
+        if not self.is_leaf():
+            self.children_iter = zip(*[child for child in self.children])
+        else:
+            self.children_iter = iter(self.tracker)
         return self
 
     def __next__(self):
-        for leaf_time_and_tracks in zip(self.tracker):
+        child_output = next(self.children_iter)
+        if not self.is_leaf():
+            timestamp = child_output[0][0]
+            child_tracks = [out[1] for out in child_output]
+            input_tracks = [SensorTracks(tracks, i) for i, tracks in enumerate(child_tracks)]
+            return (timestamp, self.tracker.process_tracks(input_tracks, timestamp))
+        else:
+            return child_output
 

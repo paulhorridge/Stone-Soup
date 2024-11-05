@@ -75,7 +75,7 @@ from stonesoup.custom.hypothesiser.probability import \
     PDAHypothesiser as PDAHypothesiserLyud  # Lyudmil's custom PDA which doesn't have to predict?
 from stonesoup.hypothesiser.probability import PDAHypothesiser  # replaced with Lyudmil's custom code
 
-from utils import plot_cov_ellipse#compute_ellipse
+from utils import plot_cov_ellipse #compute_ellipse
 
 from prh_funcs import tile_with_circles, merge_position_and_velocity, to_single_state, fit_normal_to_uniform,\
     merge_position_and_velocity_covariance
@@ -245,6 +245,8 @@ def create_fusion_hierarchy(platforms, gnd_sims, tracker_hierarchy_indices, fusi
             is_two_state = (i_level > 0 and use_two_state_tracks)
             tracker = create_fuse_tracker(fusion_time, transition_model, prior_state, is_two_state)
             children = [fusion_hierarchy[-2][i] for i in child_idx]
+            trackers = [child.tracker for child in children]
+            tracker.detector.tracklet_extractor.trackers = trackers
             fusion_hierarchy[-1].append(FusionNode(tracker, children, statedim, use_two_state_tracks))
 
     return fusion_hierarchy
@@ -338,17 +340,8 @@ all_detections = [[set() for _ in level] for level in fusion_hierarchy]
 root_node = fusion_hierarchy[-1][0]
 leaf_trackers = root_node.get_leaf_trackers()
 
-for leaf_time_and_tracks in zip(*leaf_trackers):
-
-    timestamp = leaf_time_and_tracks[0][0]
-    leaf_tracks = [x[1] for x in leaf_time_and_tracks]
-
-    print("Time: " + str(timestamp))
-
-    # Run fusion level trackers
-    for i_level, level in enumerate(fusion_hierarchy[1:]):
-        for i_node, node in enumerate(level):
-            node.process_tracks(timestamp)
+for time, tracks in root_node:
+    print("Time: " + str(time))
 
     # Get tracks and detections from fusion hierarchy
     for i_level, level in enumerate(fusion_hierarchy):
@@ -363,9 +356,9 @@ truth = ground_truth_simulator.groundtruth_paths
 
 outdir = "TestData/Large/"
 
-output_meas(outdir + "outputfile.txt", start_time, platform_positions, all_detections)
-output_tracks(outdir + "outputtracks.txt", start_time, all_tracks)
-output_truth(outdir + "outputtruth.txt", start_time, truth)
+# output_meas(outdir + "outputfile.txt", start_time, platform_positions, all_detections)
+# output_tracks(outdir + "outputtracks.txt", start_time, all_tracks)
+# output_truth(outdir + "outputtruth.txt", start_time, truth)
 
 # Plot results:
 for i in range(len(all_tracks)):
