@@ -1,0 +1,8 @@
+function mfb_createDatabaseAIS(meas, conn, collection_name)
+
+nmeas = numel(meas.times);
+for i = 1:nmeas
+    newdata = struct("type", "AIS", "lat", meas.coords(i, 2), "lon", coords(i,1),...
+        mmsi, )
+    n = insert(trackdata.conn, trackdata.collection_name, newdata);
+end

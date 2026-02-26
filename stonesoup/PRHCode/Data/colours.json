@@ -1,0 +1,146 @@
+[
+  {
+    "name": "freq3",
+    "range": [
+      3,
+      3.1
+    ],
+    "isSwitch": false,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": [],
+    "switchRate0to1": [],
+    "switchRate1to0": [],
+    "q": 0,
+    "measCov": 1.0000000000000019E-6,
+    "mean": 3.05,
+    "cov": 0.0008333333333333348
+  },
+  {
+    "name": "freq9",
+    "range": [
+      9,
+      9.1
+    ],
+    "isSwitch": false,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": [],
+    "switchRate0to1": [],
+    "switchRate1to0": [],
+    "q": 0,
+    "measCov": 9.9999999999999318E-7,
+    "mean": 9.05,
+    "cov": 0.00083333333333332742
+  },
+  {
+    "name": "scanperiod3",
+    "range": [
+      0.1,
+      0.5
+    ],
+    "isSwitch": false,
+    "isHarmonic": true,
+    "harmonicLogProbs": [
+      -0.10536051565782628,
+      -2.4079456086518718,
+      -4.6051701859880909
+    ],
+    "priorSwitchProb": [],
+    "switchRate0to1": [],
+    "switchRate1to0": [],
+    "q": 0,
+    "measCov": 1.6E-5,
+    "mean": 0.3,
+    "cov": 0.013333333333333336
+  },
+  {
+    "name": "scanperiod9",
+    "range": [
+      0.1,
+      0.5
+    ],
+    "isSwitch": false,
+    "isHarmonic": true,
+    "harmonicLogProbs": [
+      -0.10536051565782628,
+      -2.4079456086518718,
+      -4.6051701859880909
+    ],
+    "priorSwitchProb": [],
+    "switchRate0to1": [],
+    "switchRate1to0": [],
+    "q": 0,
+    "measCov": 1.6E-5,
+    "mean": 0.3,
+    "cov": 0.013333333333333336
+  },
+  {
+    "name": "pri3",
+    "range": [
+      0.001,
+      0.005
+    ],
+    "isSwitch": true,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": 0.1,
+    "switchRate0to1": 1.1574074074074073E-5,
+    "switchRate1to0": 0.00011574074074074075,
+    "q": 0,
+    "measCov": 1.6000000000000003E-9,
+    "mean": 0.003,
+    "cov": 1.3333333333333332E-6
+  },
+  {
+    "name": "pri9",
+    "range": [
+      0.001,
+      0.005
+    ],
+    "isSwitch": true,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": 0.1,
+    "switchRate0to1": 1.1574074074074073E-5,
+    "switchRate1to0": 0.00011574074074074075,
+    "q": 0,
+    "measCov": 1.6000000000000003E-9,
+    "mean": 0.003,
+    "cov": 1.3333333333333332E-6
+  },
+  {
+    "name": "pulsewidth3",
+    "range": [
+      1E-6,
+      5E-6
+    ],
+    "isSwitch": true,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": 0.1,
+    "switchRate0to1": 1.1574074074074073E-5,
+    "switchRate1to0": 0.00011574074074074075,
+    "q": 0,
+    "measCov": 1.6000000000000006E-15,
+    "mean": 3E-6,
+    "cov": 1.3333333333333338E-12
+  },
+  {
+    "name": "pulsewidth9",
+    "range": [
+      1E-6,
+      5E-6
+    ],
+    "isSwitch": true,
+    "isHarmonic": false,
+    "harmonicLogProbs": [],
+    "priorSwitchProb": 0.1,
+    "switchRate0to1": 1.1574074074074073E-5,
+    "switchRate1to0": 0.00011574074074074075,
+    "q": 0,
+    "measCov": 1.6000000000000006E-15,
+    "mean": 3E-6,
+    "cov": 1.3333333333333338E-12
+  }
+]

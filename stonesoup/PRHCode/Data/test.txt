@@ -1,0 +1,8 @@
+{
+  {
+    "name": "freq3"
+  },
+  {
+    "name": "scanperiod3"
+  }
+}
